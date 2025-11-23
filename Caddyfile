@@ -1,0 +1,37 @@
+kevinisageek.org {
+    root * /srv
+    file_server {
+        index index.html index.xml
+    }
+}
+
+fedi.kevinisageek.org {
+	@staticfiles file
+	
+	handle @staticfiles {
+		file_server
+	}
+	
+    handle /api/v1/streaming* {
+		reverse_proxy mastodon-streaming:4000
+	}
+    encode gzip
+
+	@mastodonfiles {
+		path /sw.js */assets/* */avatars/* */emoji/* */headers/* */packs/* */shortcuts/* */sounds/* */system/*
+	}
+
+	header @mastodonfiles {
+		Cache-Control "public, max-age=2419200, must-revalidate"
+		Strict-Transport-Security "max-age=63072000; includeSubDomains"
+	}
+
+	header /api/v1/streaming* {
+		Strict-Transport-Security "max-age=63072000; includeSubDomains"
+	}
+
+    handle * {
+        reverse_proxy mastodon-web:3000
+    }
+
+}
