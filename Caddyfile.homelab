@@ -1,0 +1,10 @@
+{
+    acme_dns gandi {env.GANDI_BEARER_TOKEN}
+}
+
+code.kevinisageek.org {
+    handle * {
+        reverse_proxy codeforge:3000
+    }
+
+}
