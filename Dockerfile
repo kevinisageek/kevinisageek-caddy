@@ -6,4 +6,4 @@ FROM index.docker.io/library/caddy:2
 
 COPY --from=builder /usr/bin/caddy /usr/bin/caddy
 
-COPY Caddyfile.homelab /etc/caddy/Caddyfile
+COPY Caddyfile /etc/caddy/Caddyfile
